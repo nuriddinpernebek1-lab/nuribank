@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔧 ДИАГНОСТИКА ILYAS BANK</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: monospace; background: #1e1e1e; color: #00ff00; padding: 20px; line-height: 1.6; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        h1 { text-align: center; margin-bottom: 30px; font-size: 24px; }
+        .section { background: #2d2d2d; border: 1px solid #00ff00; padding: 15px; margin-bottom: 15px; border-radius: 5px; }
+        .section h2 { color: #ffff00; margin-bottom: 10px; font-size: 16px; }
+        .status { padding: 10px; margin: 5px 0; border-radius: 3px; }
+        .ok { background: #003300; color: #00ff00; border-left: 3px solid #00ff00; }
+        .error { background: #330000; color: #ff0000; border-left: 3px solid #ff0000; }
+        .warning { background: #333300; color: #ffff00; border-left: 3px solid #ffff00; }
+        .code { background: #1a1a1a; border: 1px solid #444; padding: 10px; margin: 5px 0; overflow-x: auto; font-size: 12px; }
+        button { background: #00ff00; color: #000; border: none; padding: 10px 20px; border-radius: 3px; cursor: pointer; margin: 5px; font-family: monospace; }
+        button:hover { background: #00cc00; }
+        .list { list-style: none; padding-left: 0; }
+        .list li { padding: 5px; margin: 2px 0; }
+        .list li.loaded::before { content: "✓ "; color: #00ff00; }
+        .list li.not-loaded::before { content: "✗ "; color: #ff0000; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 ДИАГНОСТИКА ILYAS BANK</h1>
+
+        <!-- Статус загрузки -->
+        <div class="section">
+            <h2>📊 Статус Загрузки</h2>
+            <div id="load-status"></div>
+        </div>
+
+        <!-- Проверь модули -->
+        <div class="section">
+            <h2>🔍 Модули</h2>
+            <ul class="list" id="modules-list"></ul>
+        </div>
+
+        <!-- Проверь DOM -->
+        <div class="section">
+            <h2>🏗️ DOM Элементы</h2>
+            <ul class="list" id="dom-list"></ul>
+        </div>
+
+        <!-- Вывод консоли -->
+        <div class="section">
+            <h2>📝 Логи Консоли</h2>
+            <div id="console-output" style="background: #1a1a1a; padding: 10px; max-height: 300px; overflow-y: auto;"></div>
+        </div>
+
+        <!-- Действия -->
+        <div class="section">
+            <h2>⚙️ Действия</h2>
+            <button onclick="testNavigation()">Тест навигации</button>
+            <button onclick="testModules()">Тест модулей</button>
+            <button onclick="testStore()">Тест Store</button>
+            <button onclick="location.reload()">Перезагрузить страницу</button>
+        </div>
+
+        <!-- Инструкции -->
+        <div class="section">
+            <h2>📖 Как исправить</h2>
+            <div id="instructions"></div>
+        </div>
+    </div>
+
+    <script>
+        // === ЛОГИРОВАНИЕ ===
+        const logs = [];
+        const originalLog = console.log;
+        const originalError = console.error;
+
+        console.log = function(...args) {
+            logs.push({ type: 'log', text: args.join(' ') });
+            originalLog.apply(console, args);
+            updateLogs();
+        };
+
+        console.error = function(...args) {
+            logs.push({ type: 'error', text: args.join(' ') });
+            originalError.apply(console, args);
+            updateLogs();
+        };
+
+        window.addEventListener('error', (event) => {
+            logs.push({ type: 'error', text: `${event.filename}:${event.lineno} - ${event.message}` });
+            updateLogs();
+        });
+
+        function updateLogs() {
+            const output = document.getElementById('console-output');
+            output.innerHTML = logs.map((log, i) => {
+                const color = log.type === 'error' ? '#ff0000' : '#00ff00';
+                return `<div style="color: ${color}; padding: 2px 0;">${i + 1}. ${log.text}</div>`;
+            }).join('');
+            output.scrollTop = output.scrollHeight;
+        }
+
+        // === ОСНОВНАЯ ДИАГНОСТИКА ===
+        function runDiagnostics() {
+            console.log('🚀 Запуск диагностики...');
+
+            // Проверить модули
+            const modules = [
+                'Validator', 'Sanitizer', 'API', 'Store', 'Router',
+                'Notifications', 'Components', 'AuthModule',
+                'HomePage', 'LoginPage', 'RegisterPage', 'ShopPage'
+            ];
+
+            const modulesList = document.getElementById('modules-list');
+            modulesList.innerHTML = '';
+
+            modules.forEach(mod => {
+                const exists = typeof window[mod] !== 'undefined';
+                const className = exists ? 'loaded' : 'not-loaded';
+                const status = exists ? '✓' : '✗';
+                modulesList.innerHTML += `<li class="${className}">${mod} ${exists ? '✓' : '✗'}</li>`;
+                console.log(`${status} ${mod}: ${exists ? 'OK' : 'MISSING'}`);
+            });
+
+            // Проверить DOM
+            const domElements = [
+                { id: 'main-content', name: 'Main Content' },
+                { id: 'notifications-container', name: 'Notifications' },
+                { selector: 'nav', name: 'Navigation' },
+                { selector: 'header', name: 'Header' },
+                { selector: 'footer', name: 'Footer' }
+            ];
+
+            const domList = document.getElementById('dom-list');
+            domList.innerHTML = '';
+
+            domElements.forEach(el => {
+                let exists = false;
+                if (el.id) exists = !!document.getElementById(el.id);
+                if (el.selector) exists = !!document.querySelector(el.selector);
+                
+                const className = exists ? 'loaded' : 'not-loaded';
+                domList.innerHTML += `<li class="${className}">${el.name} ${exists ? '✓' : '✗'}</li>`;
+                console.log(`${exists ? '✓' : '✗'} ${el.name}: ${exists ? 'OK' : 'MISSING'}`);
+            });
+
+            // Проверить состояние
+            const status = document.getElementById('load-status');
+            const allModulesOk = modules.every(m => typeof window[m] !== 'undefined');
+            const mainContentOk = !!document.getElementById('main-content');
+
+            status.innerHTML = `
+                <div class="status ${allModulesOk ? 'ok' : 'error'}">
+                    Модули: ${allModulesOk ? '✓ Все загружены' : '✗ Не все загружены'}
+                </div>
+                <div class="status ${mainContentOk ? 'ok' : 'error'}">
+                    main-content: ${mainContentOk ? '✓ Присутствует' : '✗ Отсутствует'}
+                </div>
+                <div class="status ${allModulesOk && mainContentOk ? 'ok' : 'error'}">
+                    Приложение: ${allModulesOk && mainContentOk ? '✓ ГОТОВО' : '✗ ПРОБЛЕМЫ'}
+                </div>
+            `;
+
+            // Инструкции
+            const instructions = document.getElementById('instructions');
+            if (!allModulesOk) {
+                instructions.innerHTML += `
+                    <div class="status error">
+                        <strong>Отсутствуют модули:</strong> Проверь что все .js файлы подключены в index.html<br>
+                        <small>Services → State → UI → Modules → Pages → App</small>
+                    </div>
+                `;
+            }
+            if (!mainContentOk) {
+                instructions.innerHTML += `
+                    <div class="status error">
+                        <strong>main-content не найден:</strong> Добавь &lt;main id="main-content"&gt; в index.html
+                    </div>
+                `;
+            }
+            if (allModulesOk && mainContentOk) {
+                instructions.innerHTML = `
+                    <div class="status ok">
+                        <strong>✓ Все в порядке!</strong> Диагностика не найдена проблем.<br>
+                        Нажимай кнопки ниже для дополнительных тестов.
+                    </div>
+                `;
+            }
+
+            updateLogs();
+        }
+
+        // === ТЕСТЫ ===
+        function testNavigation() {
+            console.log('🧪 Тест навигации...');
+            try {
+                if (!window.Router) {
+                    console.error('Router не найден!');
+                    return;
+                }
+                console.log('Current path:', Router.getCurrentPath());
+                Router.navigate('/');
+                console.log('✓ Навигация работает');
+            } catch (e) {
+                console.error('✗ Ошибка навигации:', e.message);
+            }
+        }
+
+        function testModules() {
+            console.log('🧪 Тест модулей...');
+            const modules = ['Store', 'Router', 'API', 'AuthModule'];
+            modules.forEach(mod => {
+                if (window[mod]) {
+                    console.log(`✓ ${mod} загружен`);
+                } else {
+                    console.error(`✗ ${mod} НЕ найден`);
+                }
+            });
+        }
+
+        function testStore() {
+            console.log('🧪 Тест Store...');
+            try {
+                const isAuth = Store.getValue('isAuthenticated');
+                const user = Store.getValue('user');
+                console.log('isAuthenticated:', isAuth);
+                console.log('user:', user);
+                console.log('✓ Store работает');
+            } catch (e) {
+                console.error('✗ Ошибка Store:', e.message);
+            }
+        }
+
+        // === ЗАПУСК ===
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('✓ DOM готов');
+            runDiagnostics();
+        });
+
+        // Начальная диагностика
+        runDiagnostics();
+    </script>
+</body>
+</html>

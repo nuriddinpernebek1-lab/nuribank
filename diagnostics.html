@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Диагностика</title>
+</head>
+<body>
+    <h1>Диагностика сайта</h1>
+    <div id="status">Проверка...</div>
+
+    <script>
+        const status = document.getElementById('status');
+
+        // Проверка основных объектов
+        const checks = [
+            { name: 'window', check: () => typeof window !== 'undefined' },
+            { name: 'document', check: () => typeof document !== 'undefined' },
+            { name: 'console', check: () => typeof console !== 'undefined' },
+            { name: 'localStorage', check: () => typeof localStorage !== 'undefined' },
+            { name: 'sessionStorage', check: () => typeof sessionStorage !== 'undefined' }
+        ];
+
+        let results = [];
+
+        checks.forEach(check => {
+            try {
+                const result = check.check();
+                results.push(`${check.name}: ${result ? '✅' : '❌'}`);
+            } catch (e) {
+                results.push(`${check.name}: ❌ (${e.message})`);
+            }
+        });
+
+        status.innerHTML = results.join('<br>');
+
+        // Проверка загрузки скриптов
+        setTimeout(() => {
+            const scriptChecks = [
+                { name: 'API', check: () => typeof API !== 'undefined' },
+                { name: 'Store', check: () => typeof Store !== 'undefined' },
+                { name: 'Router', check: () => typeof Router !== 'undefined' },
+                { name: 'AuthModule', check: () => typeof AuthModule !== 'undefined' }
+            ];
+
+            scriptChecks.forEach(check => {
+                try {
+                    const result = check.check();
+                    results.push(`${check.name}: ${result ? '✅' : '❌'}`);
+                } catch (e) {
+                    results.push(`${check.name}: ❌ (${e.message})`);
+                }
+            });
+
+            status.innerHTML = results.join('<br>');
+        }, 1000);
+    </script>
+</body>
+</html>
