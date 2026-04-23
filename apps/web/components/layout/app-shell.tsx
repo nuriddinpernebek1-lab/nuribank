@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import Link from 'next/link';
+import { MemeToggle } from '../meme-mode/meme-toggle';
 import { MobileTabBar } from './mobile-tabbar';
 import { ThemeToggle } from './theme-toggle';
 
@@ -21,6 +22,7 @@ export function AppShell({
           <p className="subheading">{subheading}</p>
         </div>
         <div className="topbar__actions">
+          <MemeToggle />
           <ThemeToggle />
           <Link href="/login" className="button button--ghost">
             Sign in
