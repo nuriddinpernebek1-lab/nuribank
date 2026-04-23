@@ -1,0 +1,364 @@
+:root {
+  color-scheme: light dark;
+  --bg: #08111f;
+  --bg-alt: #0f1c30;
+  --surface: rgba(11, 24, 43, 0.78);
+  --surface-strong: #132742;
+  --text: #eff6ff;
+  --muted: #9bb0cb;
+  --line: rgba(148, 163, 184, 0.18);
+  --brand: #ff5d36;
+  --brand-2: #ffc145;
+  --success: #22c55e;
+  --warning: #f97316;
+  --danger: #f43f5e;
+  --radius: 24px;
+  --shadow: 0 24px 80px rgba(0, 0, 0, 0.25);
+}
+
+html[data-theme='light'] {
+  --bg: #f4f7fb;
+  --bg-alt: #edf2f7;
+  --surface: rgba(255, 255, 255, 0.88);
+  --surface-strong: #ffffff;
+  --text: #102033;
+  --muted: #5f728d;
+  --line: rgba(15, 23, 42, 0.09);
+  --shadow: 0 24px 80px rgba(32, 62, 102, 0.12);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f4f7fb;
+    --bg-alt: #edf2f7;
+    --surface: rgba(255, 255, 255, 0.88);
+    --surface-strong: #ffffff;
+    --text: #102033;
+    --muted: #5f728d;
+    --line: rgba(15, 23, 42, 0.09);
+    --shadow: 0 24px 80px rgba(32, 62, 102, 0.12);
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: "Manrope", "Segoe UI", sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at top left, rgba(255, 93, 54, 0.22), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(255, 193, 69, 0.22), transparent 28%),
+    linear-gradient(180deg, var(--bg), var(--bg-alt));
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+.shell {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 20px 16px 104px;
+}
+
+.topbar,
+.panel,
+.glass-panel,
+.hero-card,
+.feature-card,
+.balance-card,
+.chart-card,
+.auth-card {
+  backdrop-filter: blur(16px);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+
+.topbar {
+  position: sticky;
+  top: 12px;
+  z-index: 20;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  padding: 18px;
+  border-radius: 30px;
+  margin-bottom: 24px;
+}
+
+.topbar__actions,
+.hero-actions,
+.quick-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 12px;
+  color: var(--brand);
+  font-weight: 800;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(2rem, 5vw, 3.8rem);
+  line-height: 1;
+}
+
+h2 {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+}
+
+.subheading,
+.muted-copy,
+.notification-card p,
+.list-row p,
+.balance-card small {
+  color: var(--muted);
+}
+
+.hero-grid,
+.dashboard-grid,
+.transfer-layout {
+  display: grid;
+  gap: 18px;
+}
+
+.hero-grid {
+  grid-template-columns: 1.5fr 0.8fr;
+}
+
+.hero-card,
+.glass-panel,
+.feature-card,
+.panel,
+.balance-card,
+.chart-card,
+.auth-card {
+  border-radius: var(--radius);
+  padding: 20px;
+}
+
+.glass-panel,
+.feature-grid,
+.account-strip,
+.grid-two {
+  display: grid;
+  gap: 16px;
+}
+
+.feature-grid,
+.account-strip {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.button {
+  min-height: 48px;
+  border: 0;
+  border-radius: 999px;
+  padding: 0 18px;
+  background: linear-gradient(135deg, var(--brand), var(--brand-2));
+  color: #111827;
+  font-weight: 800;
+}
+
+.button--ghost {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--line);
+}
+
+.balance-card strong,
+.kpi strong {
+  display: block;
+  margin-top: 8px;
+  font-size: 1.8rem;
+}
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.chart-wrap {
+  height: 280px;
+}
+
+.list {
+  display: grid;
+  gap: 12px;
+}
+
+.list-row,
+.notification-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: center;
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.list-row__side {
+  text-align: right;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 88px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.badge--success,
+.badge--low {
+  background: rgba(34, 197, 94, 0.16);
+  color: var(--success);
+}
+
+.badge--flagged,
+.badge--high {
+  background: rgba(244, 63, 94, 0.16);
+  color: var(--danger);
+}
+
+.badge--medium,
+.badge--pending {
+  background: rgba(249, 115, 22, 0.16);
+  color: var(--warning);
+}
+
+.auth-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.auth-card {
+  width: min(100%, 480px);
+}
+
+.auth-form,
+.transfer-form {
+  display: grid;
+  gap: 14px;
+  margin: 18px 0;
+}
+
+.auth-form label,
+.transfer-form label {
+  display: grid;
+  gap: 8px;
+  font-weight: 700;
+}
+
+.auth-form input,
+.transfer-form input,
+.transfer-form select {
+  min-height: 50px;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+  padding: 0 14px;
+}
+
+.mobile-tabbar {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  display: none;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  padding: 10px;
+  border-radius: 24px;
+  background: rgba(8, 17, 31, 0.92);
+  border: 1px solid rgba(148, 163, 184, 0.15);
+  backdrop-filter: blur(20px);
+}
+
+.mobile-tabbar__item {
+  min-height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  color: white;
+}
+
+.bullets {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--muted);
+  display: grid;
+  gap: 10px;
+}
+
+@media (max-width: 960px) {
+  .hero-grid,
+  .feature-grid,
+  .account-strip,
+  .grid-two,
+  .transfer-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .shell {
+    padding-bottom: 120px;
+  }
+
+  .topbar {
+    position: static;
+    border-radius: 24px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .mobile-tabbar {
+    display: grid;
+  }
+
+  .button,
+  .auth-form input,
+  .transfer-form input,
+  .transfer-form select {
+    min-height: 52px;
+  }
+}

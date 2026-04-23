@@ -1,0 +1,11 @@
+{
+  "name": "ilyas-bank-platform",
+  "private": true,
+  "packageManager": "pnpm@10.0.0",
+  "scripts": {
+    "dev": "pnpm --parallel --filter @ilyas-bank/api --filter @ilyas-bank/web dev",
+    "build": "pnpm --filter @ilyas-bank/api build && pnpm --filter @ilyas-bank/web build",
+    "db:push": "pnpm --filter @ilyas-bank/api prisma db push",
+    "db:seed": "pnpm --filter @ilyas-bank/api prisma db seed"
+  }
+}
