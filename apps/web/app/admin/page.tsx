@@ -1,4 +1,5 @@
 import { AppShell } from '../../components/layout/app-shell';
+import { MemeCopy } from '../../components/meme-mode/meme-copy';
 
 const users = [
   { id: 'u1', name: 'Client 1', risk: 'Low', status: 'Active' },
@@ -33,6 +34,11 @@ export default function AdminPage() {
             <div>
               <p className="eyebrow">Operations</p>
               <h2>User risk queue</h2>
+              <MemeCopy
+                className="micro-copy"
+                defaultText="Prioritized review list for operations analysts."
+                memeText="Admin feed: less doomscroll, more risk control."
+              />
             </div>
           </div>
           <div className="list">

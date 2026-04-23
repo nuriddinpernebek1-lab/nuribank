@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import { AppShell } from '../components/layout/app-shell';
+import { MemeCopy } from '../components/meme-mode/meme-copy';
+import { MemeSticker } from '../components/meme-mode/meme-sticker';
 
 const features = [
   'JWT + refresh tokens + 2FA',
@@ -18,10 +20,11 @@ export default function HomePage() {
         <section className="hero-card">
           <p className="eyebrow">Startup-grade architecture</p>
           <h2>Fast dashboard, secure backend, ready for product growth</h2>
-          <p className="muted-copy">
-            Next.js renders the customer app, NestJS runs banking APIs, and PostgreSQL stores balances,
-            transactions, alerts and audit logs.
-          </p>
+          <MemeCopy
+            className="muted-copy"
+            defaultText="Next.js renders the customer app, NestJS runs banking APIs, and PostgreSQL stores balances, transactions, alerts and audit logs."
+            memeText="Next.js keeps it fast, NestJS keeps it serious, and PostgreSQL remembers every money move like it has receipts."
+          />
           <div className="hero-actions">
             <Link href="/dashboard" className="button">
               Launch dashboard
@@ -30,6 +33,10 @@ export default function HomePage() {
               Try auth flow
             </Link>
           </div>
+          <MemeSticker
+            label="(^^)"
+            caption="Onboarding energy: sleek fintech in public, tiny internet brain in private."
+          />
         </section>
 
         <section className="glass-panel">

@@ -105,7 +105,8 @@ select {
 
 .topbar__actions,
 .hero-actions,
-.quick-actions {
+.quick-actions,
+.inline-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
@@ -138,10 +139,16 @@ h2 {
 
 .subheading,
 .muted-copy,
+.micro-copy,
 .notification-card p,
 .list-row p,
 .balance-card small {
   color: var(--muted);
+}
+
+.micro-copy {
+  margin-top: 8px;
+  font-size: 0.95rem;
 }
 
 .hero-grid,
@@ -161,7 +168,8 @@ h2 {
 .panel,
 .balance-card,
 .chart-card,
-.auth-card {
+.auth-card,
+.empty-state {
   border-radius: var(--radius);
   padding: 20px;
 }
@@ -193,6 +201,22 @@ h2 {
   background: transparent;
   color: var(--text);
   border: 1px solid var(--line);
+}
+
+.mode-chip,
+.secret-chip {
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  font-weight: 700;
+}
+
+.mode-chip--active {
+  border-color: rgba(255, 193, 69, 0.45);
+  box-shadow: 0 0 0 4px rgba(255, 193, 69, 0.08);
 }
 
 .balance-card strong,
@@ -231,6 +255,21 @@ h2 {
 
 .list-row__side {
   text-align: right;
+}
+
+.onboarding-panel {
+  position: relative;
+  overflow: hidden;
+}
+
+.onboarding-panel::after {
+  content: '';
+  position: absolute;
+  inset: auto -10% -35% auto;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, rgba(255, 193, 69, 0.24), transparent 68%);
+  pointer-events: none;
 }
 
 .badge {
@@ -296,6 +335,83 @@ h2 {
   background: rgba(255, 255, 255, 0.05);
   color: var(--text);
   padding: 0 14px;
+}
+
+.meme-copy {
+  color: var(--muted);
+}
+
+.meme-sticker {
+  margin-top: 18px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: 1px dashed rgba(255, 193, 69, 0.35);
+  background: linear-gradient(135deg, rgba(255, 93, 54, 0.08), rgba(255, 193, 69, 0.06));
+}
+
+.meme-sticker__emoji {
+  display: inline-flex;
+  margin-bottom: 8px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.toast-demo {
+  margin: 0 0 14px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  font-weight: 700;
+}
+
+.toast-demo--success {
+  background: rgba(34, 197, 94, 0.14);
+  color: var(--success);
+}
+
+.toast-demo--error,
+.inline-alert--error {
+  background: rgba(244, 63, 94, 0.14);
+  color: #ffb6c1;
+}
+
+.inline-alert {
+  margin-bottom: 14px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(244, 63, 94, 0.2);
+}
+
+.empty-state {
+  display: grid;
+  place-items: center;
+  gap: 10px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.empty-state__visual {
+  width: 68px;
+  height: 68px;
+  display: grid;
+  place-items: center;
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(255, 93, 54, 0.16), rgba(255, 193, 69, 0.14));
+  font-weight: 900;
+}
+
+.balance-card--button {
+  text-align: left;
+  border: 1px solid var(--line);
+  cursor: pointer;
+}
+
+.secret-chip {
+  display: inline-flex;
+  margin-top: 12px;
+  min-height: 32px;
+  align-items: center;
+  padding: 0 12px;
+  font-size: 0.82rem;
 }
 
 .mobile-tabbar {

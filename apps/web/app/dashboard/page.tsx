@@ -1,5 +1,9 @@
 import dynamic from 'next/dynamic';
+import { BalanceCard } from '../../components/dashboard/balance-card';
+import { DashboardOnboarding } from '../../components/dashboard/dashboard-onboarding';
 import { AppShell } from '../../components/layout/app-shell';
+import { MemeCopy } from '../../components/meme-mode/meme-copy';
+import { EmptyState } from '../../components/states/empty-state';
 import { getDashboardSnapshot } from '../../lib/api';
 
 const SpendingChart = dynamic(
@@ -16,13 +20,16 @@ export default async function DashboardPage() {
   return (
     <AppShell heading="Customer dashboard" subheading="Balances, recent activity, FX quotes and fraud-aware transaction monitoring in one mobile-friendly surface.">
       <main className="dashboard-grid">
+        <DashboardOnboarding />
+
         <section className="account-strip">
           {snapshot.accounts.map((account) => (
-            <article key={account.id} className="balance-card">
-              <span>{account.currency} account</span>
-              <strong>{account.balance.toLocaleString()} {account.currency}</strong>
-              <small>{account.isPrimary ? 'Primary spending wallet' : 'Secondary currency account'}</small>
-            </article>
+            <BalanceCard
+              key={account.id}
+              currency={account.currency}
+              balance={account.balance}
+              note={account.isPrimary ? 'Primary spending wallet' : 'Secondary currency account'}
+            />
           ))}
         </section>
 
@@ -41,6 +48,11 @@ export default async function DashboardPage() {
               <div>
                 <p className="eyebrow">Live market</p>
                 <h2>FX board</h2>
+                <MemeCopy
+                  className="micro-copy"
+                  defaultText="Exchange rates update quietly in the background."
+                  memeText="FX board is calm right now. No currency drama, just vibes and decimals."
+                />
               </div>
             </div>
             <div className="list">
@@ -76,6 +88,11 @@ export default async function DashboardPage() {
             <div>
               <p className="eyebrow">Recent operations</p>
               <h2>Transaction history</h2>
+              <MemeCopy
+                className="micro-copy"
+                defaultText="Latest ledger activity across your wallets."
+                memeText="Your financial lore, now in chronological order."
+              />
             </div>
           </div>
           <div className="list">
@@ -92,6 +109,20 @@ export default async function DashboardPage() {
               </div>
             ))}
           </div>
+        </section>
+
+        <section className="panel">
+          <div className="section-head">
+            <div>
+              <p className="eyebrow">Waiting room</p>
+              <h2>Disputes queue</h2>
+            </div>
+          </div>
+          <EmptyState
+            title="Nothing needs attention"
+            strictMessage="No active charge disputes or unresolved operations."
+            memeMessage="Inbox is clear. Fraud team currently has zero plot twists."
+          />
         </section>
       </main>
     </AppShell>
