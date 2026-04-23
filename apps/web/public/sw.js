@@ -1,7 +1,7 @@
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open('ilyas-bank-shell-v1').then((cache) =>
-      cache.addAll(['/', '/dashboard', '/transfers', '/manifest.json'])
+      cache.addAll(['./', './dashboard/', './transfers/', './manifest.webmanifest'])
     )
   );
 });
