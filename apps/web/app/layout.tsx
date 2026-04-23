@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { MemeModeProvider } from '../components/meme-mode/meme-mode-provider';
 import { RegisterServiceWorker } from '../components/pwa/register-sw';
 import './globals.css';
 
@@ -12,8 +13,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body>
-        <RegisterServiceWorker />
-        {children}
+        <MemeModeProvider>
+          <RegisterServiceWorker />
+          {children}
+        </MemeModeProvider>
       </body>
     </html>
   );
